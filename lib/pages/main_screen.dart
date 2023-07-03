@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:signteach/pages/letter_screen.dart';
+import 'package:signteach/pages/login_screen.dart';
 import 'package:signteach/utils/consts.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,6 +31,12 @@ class MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Teach'),
+        leading: IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            _signOut(context);
+          },
+        ),
       ),
       body: Center(
           child: ListView.builder(
@@ -49,5 +59,27 @@ class MainScreenState extends State<MainScreen> {
     );
   }
 
-  void changeScreen(BuildContext context, String letter) {}
+  void changeScreen(BuildContext context, String letter) {
+    /* FirebaseStorage.instance
+        .ref()
+        .child('Buenas Noches.mp4')
+        .getDownloadURL()
+        .then((value) => videoUrl = value)
+        .catchError((e) => Fluttertoast.showToast(msg: "a")) */
+    ;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LetterScreen(
+                  videoUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/signteach-be0de.appspot.com/o/$letter.mp4?alt=media',
+                  title: letter,
+                )));
+  }
+
+  void _signOut(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
 }

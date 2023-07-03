@@ -6,3 +6,11 @@ void initializeFirebase() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
+
+String parseString(String? str) {
+  if (str == null) {
+    return '';
+  } else {
+    return str;
+  }
+}

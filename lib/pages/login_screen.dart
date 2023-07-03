@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,19 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    ElevatedButton.icon(
+                      label: const Text('Registrarse',
+                          style: TextStyle(color: Colors.white)),
+                      icon: const Icon(Icons.login),
+                      onPressed: () {
+                        //_signInGoogle(context);
+                      },
+                      style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(primary),
+                        iconColor: MaterialStatePropertyAll(Colors.white),
+                      ),
+                    ),
                   ],
                 );
               })),
@@ -105,9 +120,18 @@ class LoginScreen extends StatelessWidget {
     }
   }
 
-  void _signInGoogle(BuildContext context) async {
-    try {} catch (e) {
-      Fluttertoast.showToast(msg: "Usuario incorrecto, registrese!");
-    }
+  Future<void> _signInGoogle(BuildContext context) async {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainScreen()));
   }
 }
