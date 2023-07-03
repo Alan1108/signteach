@@ -30,6 +30,20 @@ List<String> abecedary = [
   'Z'
 ];
 
+List<String> vowelsGreatingsAndColors = [
+  'Buenas%20Noches',
+  'Buenas%20Tardes',
+  'A',
+  'E',
+  'I',
+  'O',
+  'U',
+  'Azul',
+  'Rojo',
+  'Rosado',
+  'Verde'
+];
+
 const primary = Color.fromARGB(255, 78, 201, 223);
 const secondary = Color.fromARGB(255, 99, 161, 208);
 const terciary = Color.fromARGB(255, 53, 118, 167);

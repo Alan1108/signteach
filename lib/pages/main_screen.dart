@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:signteach/pages/letter_screen.dart';
 import 'package:signteach/pages/login_screen.dart';
 import 'package:signteach/utils/consts.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -30,32 +29,48 @@ class MainScreenState extends State<MainScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Teach'),
+        title: const Text(
+          'Sign Teach',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.logout),
+          icon: const Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
           onPressed: () {
             _signOut(context);
           },
         ),
+        backgroundColor: terciary,
       ),
       body: Center(
-          child: ListView.builder(
-              itemCount: abecedary.length,
-              itemBuilder: (context, index) {
-                if (index >= _currentStartIndex + 10) {
-                  _currentStartIndex += 10;
-                }
-                return Column(
-                  children: [
-                    ElevatedButton(
-                      child: Text(abecedary[index]),
-                      onPressed: () {
-                        changeScreen(context, abecedary[index]);
-                      },
-                    )
-                  ],
-                );
-              })),
+        child: ListView.builder(
+            itemCount: vowelsGreatingsAndColors.length,
+            itemBuilder: (context, index) {
+              if (index >= _currentStartIndex + 10) {
+                _currentStartIndex += 10;
+              }
+              return Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      changeScreen(context, vowelsGreatingsAndColors[index]);
+                    },
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(primary),
+                      iconColor: MaterialStatePropertyAll(Colors.white),
+                    ),
+                    child: Text(
+                      vowelsGreatingsAndColors[index].replaceAll('%20', ' '),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              );
+            }),
+      ),
+      backgroundColor: secondary,
     );
   }
 

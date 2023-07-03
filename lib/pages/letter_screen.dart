@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:signteach/utils/consts.dart';
 import 'package:video_player/video_player.dart';
 
 class LetterScreen extends StatefulWidget {
@@ -10,7 +11,6 @@ class LetterScreen extends StatefulWidget {
 }
 
 class LetterScreenState extends State<LetterScreen> {
-  String letterVideo = '';
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
@@ -36,7 +36,12 @@ class LetterScreenState extends State<LetterScreen> {
   Widget build(BuildContext context) {
     return (Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title.replaceAll('%20', ' '),
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: terciary,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: FutureBuilder(
         future: _initializeVideoPlayerFuture,
@@ -73,6 +78,7 @@ class LetterScreenState extends State<LetterScreen> {
           }
         },
       ),
+      backgroundColor: quaternary,
     ));
   }
 }
