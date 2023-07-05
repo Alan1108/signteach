@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:signteach/repositories/models/teaching_cantegory.dart';
 
 List<String> abecedary = [
   'A',
@@ -30,18 +31,20 @@ List<String> abecedary = [
   'Z'
 ];
 
-List<String> vowelsGreatingsAndColors = [
-  'Buenas%20Noches',
-  'Buenas%20Tardes',
-  'A',
-  'E',
-  'I',
-  'O',
-  'U',
-  'Azul',
-  'Rojo',
-  'Rosado',
-  'Verde'
+List<TeachingCategory> categories = [
+  TeachingCategory(name: "Saludos", options: [
+    'Buenas%20Noches',
+    'Buenas%20Tardes',
+  ]),
+  TeachingCategory(name: "Vocales", options: [
+    'A',
+    'E',
+    'I',
+    'O',
+    'U',
+  ]),
+  TeachingCategory(
+      name: "Colores", options: ['Azul', 'Rojo', 'Rosado', 'Verde'])
 ];
 
 const primary = Color.fromARGB(255, 78, 201, 223);

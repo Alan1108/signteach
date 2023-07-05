@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:signteach/pages/letter_screen.dart';
-import 'package:signteach/pages/login_screen.dart';
+import 'package:signteach/pages/category_screen.dart';
+import 'package:signteach/pages/video_screen.dart';
+import 'package:signteach/components/custom_drawer.dart';
 import 'package:signteach/utils/consts.dart';
+import 'package:signteach/utils/functions.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -28,73 +29,58 @@ class MainScreenState extends State<MainScreen> {
       gravity: ToastGravity.BOTTOM,
     );
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const Text(
           'Sign Teach',
           style: TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            _signOut(context);
-          },
-        ),
         backgroundColor: terciary,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
-        child: ListView.builder(
-            itemCount: vowelsGreatingsAndColors.length,
-            itemBuilder: (context, index) {
-              if (index >= _currentStartIndex + 10) {
-                _currentStartIndex += 10;
-              }
-              return Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      changeScreen(context, vowelsGreatingsAndColors[index]);
-                    },
-                    style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(primary),
-                      iconColor: MaterialStatePropertyAll(Colors.white),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 35, 0, 0),
+          child: ListView.builder(
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                if (index >= _currentStartIndex + 10) {
+                  _currentStartIndex += 10;
+                }
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _changeScreen(context, categories[index].options,
+                            categories[index].name);
+                      },
+                      style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(primary),
+                        iconColor: MaterialStatePropertyAll(Colors.white),
+                      ),
+                      child: Text(
+                        parseString(categories[index].name)
+                            .replaceAll('%20', ' '),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
-                    child: Text(
-                      vowelsGreatingsAndColors[index].replaceAll('%20', ' '),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-              );
-            }),
+                  ],
+                );
+              }),
+        ),
       ),
       backgroundColor: secondary,
     );
   }
 
-  void changeScreen(BuildContext context, String letter) {
-    /* FirebaseStorage.instance
-        .ref()
-        .child('Buenas Noches.mp4')
-        .getDownloadURL()
-        .then((value) => videoUrl = value)
-        .catchError((e) => Fluttertoast.showToast(msg: "a")) */
-    ;
+  void _changeScreen(
+      BuildContext context, List<String>? options, String? name) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LetterScreen(
-                  videoUrl:
-                      'https://firebasestorage.googleapis.com/v0/b/signteach-be0de.appspot.com/o/$letter.mp4?alt=media',
-                  title: letter,
+            builder: (context) => CategoryScreen(
+                  options: options,
+                  name: name,
                 )));
-  }
-
-  void _signOut(BuildContext context) {
-    FirebaseAuth.instance.signOut();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }

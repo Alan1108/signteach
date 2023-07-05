@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:signteach/utils/consts.dart';
 import 'package:video_player/video_player.dart';
 
-class LetterScreen extends StatefulWidget {
-  const LetterScreen({super.key, required this.videoUrl, required this.title});
+class VideoScreen extends StatefulWidget {
+  const VideoScreen({super.key, required this.videoUrl, required this.title});
   final String videoUrl;
   final String title;
   @override
-  LetterScreenState createState() => LetterScreenState();
+  VideoScreenState createState() => VideoScreenState();
 }
 
-class LetterScreenState extends State<LetterScreen> {
+class VideoScreenState extends State<VideoScreen> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
@@ -47,38 +47,34 @@ class LetterScreenState extends State<LetterScreen> {
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the VideoPlayerController has finished initialization, use
-            // the data it provides to limit the aspect ratio of the video.
             return InkWell(
                 onTap: () {
                   if (_controller.value.isPlaying) {
                     _controller.pause();
                   } else {
-                    // If the video is paused, play it.
                     _controller.play();
                   }
                 },
                 child: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          // Use the VideoPlayer widget to display the video.
-                          child: VideoPlayer(_controller),
-                        ),
-                      ]),
+                  child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Column(
+                        children: [
+                          AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                        ],
+                      )),
                 ));
           } else {
-            // If the VideoPlayerController is still initializing, show a
-            // loading spinner.
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
         },
       ),
-      backgroundColor: quaternary,
+      backgroundColor: secondary,
     ));
   }
 }
