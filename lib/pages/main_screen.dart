@@ -24,7 +24,7 @@ class MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Fluttertoast.showToast(
-      msg: "Bienvenido a Sign Teach",
+      msg: "Bienvenido a Tecni Letras",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
     );
@@ -32,7 +32,7 @@ class MainScreenState extends State<MainScreen> {
       drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const Text(
-          'Sign Teach',
+          'Tecni Letras',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: terciary,

@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:signteach/repositories/models/user.dart' as appUser;
+import 'package:signteach/repositories/models/user.dart' as app_user;
 import 'package:signteach/utils/consts.dart';
 import 'package:signteach/pages/main_screen.dart';
 import 'package:signteach/pages/games_screen.dart';
@@ -11,7 +10,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    appUser.User user = getUser();
+    app_user.User user = getUser();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
